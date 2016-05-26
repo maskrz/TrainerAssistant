@@ -26,7 +26,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean class="java.net.URI" id="dbUrl">
-		<constructor-arg value="postgres://postgres:root@localhost:5432/tassistant" />
+		<constructor-arg value="${DATABASE_URL}" />
 	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -59,8 +59,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="${email.user}" />
-		<property name="password" value="${email.password}" />
+		<property name="username" value="${EMAIL_USER}" />
+		<property name="password" value="${EMAIL_PASSWORD}" />
 
 		<!-- The name of the property, following JavaBean naming conventions -->
 		<property name="javaMailProperties">

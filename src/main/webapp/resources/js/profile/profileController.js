@@ -108,7 +108,8 @@ function drawChart(selectedRecords) {
 			trigger : 'selection'
 		},
 		interpolateNulls : true,
-		height: 400
+		height: 400,
+		title: "Skuteczność resuscytucji"
 	};
 
 	// Instantiate and draw our chart, passing in some options.
