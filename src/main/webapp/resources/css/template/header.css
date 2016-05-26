@@ -1,0 +1,36 @@
+.header {
+	background-color: #444444;
+	height: 40px;
+}
+
+.logo {
+	height: 38px;
+	padding-top: 2px;
+	padding-left: 5px;
+}
+
+.menu-element {
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 20px;
+	color: #DADFE3;
+	font-weight: bold;
+}
+
+.red-mark {
+	height: 5px;
+	background-color: red;
+	position: absolute;
+	bottom: 0px;
+	margin-left: -14px;
+	width: 100%;
+}
+
+.logout {
+	text-align: right;
+}
+
+.logout-icon {
+	margin-left: 5px;
+}

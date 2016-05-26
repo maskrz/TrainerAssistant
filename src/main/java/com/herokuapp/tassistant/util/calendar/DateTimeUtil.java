@@ -10,4 +10,8 @@ public interface DateTimeUtil {
 	public LocalDateTime currentTimestamp();
 	
 	public Duration calculateDuration(LocalDateTime start, LocalDateTime end);
+	
+	public LocalDateTime toDateTime(String date, String format);
+
+	public boolean sameDate(LocalDateTime date1, LocalDateTime date2);
 }

@@ -2,18 +2,20 @@ package com.herokuapp.tassistant.service.user;
 
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.tassistant.bean.general.DailyRecordBean;
 import com.herokuapp.tassistant.bean.general.Response;
 import com.herokuapp.tassistant.database.dao.user.UserDAO;
+import com.herokuapp.tassistant.database.entity.DailyRecord;
+import com.herokuapp.tassistant.database.entity.DailyRecordId;
 import com.herokuapp.tassistant.database.entity.User;
 import com.herokuapp.tassistant.service.user.registration.OnRegistrationCompleteEvent;
+import com.herokuapp.tassistant.util.calendar.DateTimeUtil;
 import com.herokuapp.tassistant.util.security.SecurityUtil;
 import com.herokuapp.tassistant.util.validation.ValidationException;
 import com.herokuapp.tassistant.util.validation.ValidationUtil;
@@ -23,18 +25,21 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private SecurityUtil securityUtil;
-	
+
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	@Autowired
 	private ValidationUtil validationUtil;
-	
+
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
-	
+
+	@Autowired
+	private DateTimeUtil dateTimeUtil;
+
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public Response registerUser(User user) {
 		Response response = new Response();
 		try {
@@ -66,8 +71,45 @@ public class UserServiceImpl implements UserService {
 			}
 		} else {
 			response.setMessage("Wrong token!");
-		}		
+		}
 		return response;
+	}
+
+	@Override
+	public DailyRecord addRecord(User user, DailyRecordBean dailyRecordBean) {
+		DailyRecordId dailyRecordId = new DailyRecordId();
+		dailyRecordId.setRecordDate(getDateTimeUtil().toDateTime(dailyRecordBean.getDate(), "dd/MM/yyyy"));
+		dailyRecordId.setUserId(user.getUserId());
+		DailyRecord dailyRecord = containsRecord(user, dailyRecordId);
+		if (dailyRecord != null) {
+			dailyRecord.setDailyRecordId(dailyRecordId);
+			dailyRecord.setT1(dailyRecordBean.getT1());
+			dailyRecord.setT2(dailyRecordBean.getT2());
+			dailyRecord.setT3(dailyRecordBean.getT3());
+			dailyRecord.setWsr(dailyRecordBean.getWsr());
+			getUserDAO().updateUser(user);
+		} else {
+			dailyRecord = new DailyRecord();
+			dailyRecord.setDailyRecordId(dailyRecordId);
+			dailyRecord.setT1(dailyRecordBean.getT1());
+			dailyRecord.setT2(dailyRecordBean.getT2());
+			dailyRecord.setT3(dailyRecordBean.getT3());
+			dailyRecord.setWsr(dailyRecordBean.getWsr());
+			user.getDailyRecords().add(dailyRecord);
+			getUserDAO().updateUser(user);
+		}
+		return dailyRecord;
+	}
+
+	private DailyRecord containsRecord(User user, DailyRecordId dailyRecordId) {
+		// TODO java 8
+		for (DailyRecord dailyRecord : user.getDailyRecords()) {
+			if (getDateTimeUtil().sameDate(dailyRecord.getDailyRecordId().getRecordDate(),
+					dailyRecordId.getRecordDate())) {
+				return dailyRecord;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -105,6 +147,14 @@ public class UserServiceImpl implements UserService {
 
 	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
 		this.applicationEventPublisher = applicationEventPublisher;
+	}
+
+	public DateTimeUtil getDateTimeUtil() {
+		return dateTimeUtil;
+	}
+
+	public void setDateTimeUtil(DateTimeUtil dateTimeUtil) {
+		this.dateTimeUtil = dateTimeUtil;
 	}
 
 }

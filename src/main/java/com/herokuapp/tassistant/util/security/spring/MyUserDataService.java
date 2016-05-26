@@ -14,10 +14,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.herokuapp.tassistant.database.entity.User;
 import com.herokuapp.tassistant.service.user.UserService;
 
+@Service("myUserDataService")
 public class MyUserDataService implements UserDetailsService {
 
 	@Autowired
@@ -40,7 +42,7 @@ public class MyUserDataService implements UserDetailsService {
 	    
 	    User user = optUser.get();
 	 
-	    List<String> permissions = Arrays.asList("ADMIN_ROLE", "USER_ROLE");
+	    List<String> permissions = Arrays.asList("ROLE_ADMIN", "ROLE_USER");
 	 
 	    if(permissions.isEmpty()) {
 	 

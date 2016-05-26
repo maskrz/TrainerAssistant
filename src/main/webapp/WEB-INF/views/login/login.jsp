@@ -3,11 +3,11 @@
 <div class="login-container">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<strong>Please sign in</strong>
+			<strong>Please sign insnn</strong>
 		</div>
 		<div class="panel-body">
 			<form class="form-signin" name='loginForm'
-				action="${loginUrl}" method='POST'>
+				 method='POST' login-processing-url="/j_spring_security_check" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password"/>
 				<div class="form-group">
 					<div class="input-group">
 						<input type="text" id="username" name="username"

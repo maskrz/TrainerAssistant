@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	
+	<!-- Registration -->
+	<definition name="/registration/registration" extends="base.definition">
+		<put-attribute name="title" value="TA | Registration"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/registration/registration.jsp"></put-attribute>
+		<put-list-attribute name="javascripts" inherit="true">        	
+        	<add-attribute value="https://raw.githubusercontent.com/gdi2290/angular-md5/master/angular-md5.js" />
+        	<add-attribute value="/resources/js/registration/registrationController.js" />
+        	<add-attribute value="/resources/js/registration/registrationService.js" />        	
+    	</put-list-attribute>
+	</definition>
+	
+	<definition name="/profile/profile" extends="base.definition">
+		<put-attribute name="title" value="TA | Profile"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/profile/profile.jsp"></put-attribute>
+		<put-list-attribute name="javascripts" inherit="true">               	
+        	<add-attribute value="https://www.gstatic.com/charts/loader.js" />
+        	<add-attribute value="/resources/js/profile/profileController.js" />
+        	<add-attribute value="/resources/js/profile/profileService.js" />        	
+    	</put-list-attribute>
+    	<put-list-attribute name="stylesheets" inherit="true">
+        	<add-attribute value="/resources/css/profile/profile.css" />  	
+    	</put-list-attribute>
+	</definition>
+
+
+	<!-- Browse data -->
+	<!-- <definition name="admin/browseData/browseDataForm" extends="admin/"> -->
+	<!-- <put-attribute name="body" value="/WEB-INF/jsp/admin/browseData/browseDataForm.jsp" 
+		/> -->
+	<!-- <put-list-attribute name="javascripts" inherit="true"> -->
+	<!-- <add-attribute value="/resources/admin/browseData/browseDataService.js" 
+		/> -->
+	<!-- <add-attribute value="/resources/admin/browseData/browseDataController.js" 
+		/> -->
+	<!-- </put-list-attribute> -->
+	<!-- <put-list-attribute name="stylesheets" inherit="true"> -->
+	<!-- <add-attribute value="/resources/admin/browseData/browseData.css" /> -->
+	<!-- </put-list-attribute> -->
+	<!-- <put-list-attribute name="breadcrumbs" inherit="true"> -->
+	<!-- <add-attribute value="Browse Data" /> -->
+	<!-- </put-list-attribute> -->
+	<!-- </definition> -->
+</tiles-definitions>
